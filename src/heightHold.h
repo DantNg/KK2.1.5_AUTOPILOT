@@ -2,7 +2,7 @@
 //PID Variables 
 float p=1.5;float p_value=0;
 float I=0.00;float I_value=0;
-float D=1;float D_value=0;
+float D=0.1;float D_value=0;
 float total=0;
 float error=0;float pre_error=0;float derror=0;float ierror=0;
 
