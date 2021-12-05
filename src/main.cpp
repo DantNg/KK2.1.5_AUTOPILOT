@@ -165,50 +165,6 @@ void readCompass()
   Serial.println();
 }
 ////////////////////////////////////////     GPS        ///////////////////////////////////////////////
-void displayGPS()
-{
- 
-  // if (gps.location.isValid())
-  // {
-  //   latitude = gps.location.lat();
-  //   longtitude = gps.location.lng();
-  // } 
-  // DEBUG_PRINT(F("  Date/Time: "));
-  // if (gps.date.isValid())
-  // {
-  //   DEBUG_PRINT(gps.date.month());
-  //   DEBUG_PRINT(F("/"));
-  //   DEBUG_PRINT(gps.date.day());
-  //   DEBUG_PRINT(F("/"));
-  //   DEBUG_PRINT(gps.date.year());
-  // }
-  // else
-  // {
-  //   DEBUG_PRINT(F("INVALID"));
-  // }
-
-  // DEBUG_PRINT(F(" "));
-  // if (gps.time.isValid())
-  // {
-  //   if (gps.time.hour() < 10) Serial.print(F("0"));
-  //   DEBUG_PRINT(gps.time.hour()+7);
-  //   DEBUG_PRINT(F(":"));
-  //   if (gps.time.minute() < 10) Serial.print(F("0"));
-  //   DEBUG_PRINT(gps.time.minute());
-  //   DEBUG_PRINT(F(":"));
-  //   if (gps.time.second() < 10) Serial.print(F("0"));
-  //   DEBUG_PRINT(gps.time.second());
-  //   DEBUG_PRINT(F("."));
-  //   if (gps.time.centisecond() < 10) Serial.print(F("0"));
-  //   DEBUG_PRINT(gps.time.centisecond());
-  // }
-  // else
-  // {
-  //   DEBUG_PRINT(F("INVALID"));
-  // }
-
-  // DEBUG_PRINTLN();
-}
 void gpsReader()
 {
    // This sketch displays information every time a new sentence is correctly encoded.
@@ -226,6 +182,7 @@ void gpsReader()
 
     }
 }
+/////////////////////////////////////////     SETUP      ////////////////////////////////////////////
 void setup() {
 
     // put your setup code here, to run once:
@@ -285,7 +242,7 @@ channel[5] = 1000;
 }
 
 
-
+////////////////////////////////////////    LOOP    //////////////////////////////////////////////
 void loop() {
 
   //read RX signal  
@@ -387,11 +344,7 @@ if(activeStatus)
   }
 
   //****************************** GPS HOLD MODE *****************************************************
-    p_val=map(channel[4],1100,2000,0,10);
-    if(p_val<0) p_val=0;
-    d_lat=-1*1000000,d_lng=1*1000000; 
-    p_lat=1*p_val*1000000,p_lng=-1*p_val*1000000;
-
+    
     // while(Serial.available())//While there are characters to come from the GPS
     // {
     //   gps.encode(Serial.read());//This feeds the serial NMEA data into the library one char at a time
@@ -441,8 +394,8 @@ if(activeStatus)
               //GPS position based calculations for Aileron and Elevation to control the left/right, front/back motion
               Ail_change=p_lng*(current_lng-initial_lng) + d_lng*(current_lng-previous_lng);
               Ele_change=p_lat*(current_lat-initial_lat) + d_lat*(current_lat-previous_lat);
-              limit_val=200;
-              //Limit the maximum corrections to limit_val=300, so that the bot does not tilt too much
+              limit_val=200;//Limit the maximum corrections to limit_val=300, so that the bot does not tilt too much
+              
               if(abs(Ail_change)>limit_val){
                Ail_change=limit_val*(abs(Ail_change)/Ail_change);
                }
